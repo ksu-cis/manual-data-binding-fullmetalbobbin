@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Note.cs
+ * Author: CIS 308
+ * Modified by: Amanda Dreesen
+ *
+ */
+
+using System;
 
 namespace ManualDataBinding.Data
 {
@@ -8,13 +14,53 @@ namespace ManualDataBinding.Data
     public class Note
     {
         /// <summary>
+        /// Event handler for note changes
+        /// </summary>
+        public event EventHandler NoteChanged;
+
+
+        private string title = DateTime.Now.ToString();
+        /// <summary>
         /// The title of the Note
         /// </summary>
-        public string Title { get; set; } = DateTime.Now.ToString();
+        public string Title 
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                if (title == value)
+                {
+                    return;
+                }
+                title = value;
+                NoteChanged?.Invoke(this, new EventArgs());
+            }
+                
+        }
 
+        private string body = "";
         /// <summary>
         /// The text of the note
         /// </summary>
-        public string Body { get; set; } = "";
+        public string Body
+        {
+            get
+            {
+                return body;
+            }
+            set
+            {
+                if (body == value)
+                {
+                    return;
+                }
+                body = value;
+                NoteChanged?.Invoke(this, new EventArgs());
+            }
+
+        }
     }
 }
